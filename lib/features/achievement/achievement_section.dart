@@ -28,7 +28,13 @@ import '../../core/time_format.dart';
 /// 헤더의 '전체 보기'.
 class AchievementSection extends StatelessWidget {
   /// 상태와 무관하게 표가 지키는 줄 수.
-  static const int kRows = 3;
+  ///
+  /// 2026-09-07 (D128-b · 사용자 "업적 빈 카드 축소"): 3 → **2**. 업적이 0인 회원에게는
+  /// 이 자리가 통째로 빈 채로 서 있어 홈에서 가장 큰 공백이었다. 줄여도 **밀림은 그대로
+  /// 막힌다** — 예약 자리와 표시 줄 수를 같은 값으로 묶는 규칙(v3.34)은 유지하고 값만
+  /// 내렸다. 대가: 업적이 많은 회원의 홈은 3줄 → 2줄만 보이고 나머지는 "그 외 N개" 와
+  /// 헤더 '전체 보기' 가 받는다.
+  static const int kRows = 2;
 
   /// 예약 높이 — [kRows] 줄 + 그 사이 1px 구분선 + 카드 테두리 위아래 1px.
   /// (HkRowCard = HkCard 이므로 테두리 2px 가 바깥 높이에 더해진다.)
@@ -113,12 +119,14 @@ class AchievementSection extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               if (loading)
-                const HkRowCard(
-                  rows: [
-                    HkSkeletonRow(leading: true),
-                    HkSkeletonRow(leading: true),
-                    HkSkeletonRow(leading: true),
-                  ],
+                // 줄 수는 kRows 하나에서 나온다 — 여기 숫자를 따로 적으면
+                // 예약 높이(kBodyH)와 스켈레톤이 갈려 그 순간 밀림이 생긴다
+                // (2026-09-07: 실제로 3 이 박혀 있어 kRows 를 2 로 내리자 어긋났다).
+                HkRowCard(
+                  rows: List<Widget>.generate(
+                    kRows,
+                    (_) => const HkSkeletonRow(leading: true),
+                  ),
                 )
               else if (unlockedList.isEmpty)
                 // 빈 상태 — 아직 해금 없음. 예약한 자리를 그대로 채운다.
