@@ -238,13 +238,16 @@ class HyphenTokens {
   );
 
   /// 섹션 구분 라벨 ALLCAPS. 코드에서 toUpperCase 필수 (조상 label 12 — 대문자 영문이라 양수 자간 예외).
+  /// 2026-09-07 가시성 점검 §3 — 색은 `muted`(#71717A) 였는데 흰 바탕 4.83 은 통과해도
+  /// **회색 상자(#F5F5F5) 위에서 4.43** 으로 기준(4.5)에 못 미쳤다. 수업 탭 펼침 상자의
+  /// 파트 라벨이 정확히 그 자리다. `fgSecondary`(= AppKit.textSub #52525B) 는 같은 자리에서 7.09 라 여유가 있다.
   static const TextStyle sectionLabel = TextStyle(
     fontFamily: fontFamily,
     fontSize: AppKit.labelSize,
     fontWeight: AppKit.labelWeight,
     height: AppKit.labelLh,
     letterSpacing: AppKit.labelLs,
-    color: muted,
+    color: fgSecondary,   // = AppKit.textSub #52525B
   );
 
   /// Offline 등 단어 라벨.

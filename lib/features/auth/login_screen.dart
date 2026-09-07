@@ -333,6 +333,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 HkButton.tertiary(
                   '이용약관',
                   neutral: true,
+                  small: true,
                   onPressed: () => Navigator.of(context).push(
                     MaterialPageRoute(builder: (_) => const TermsScreen()),
                   ),
@@ -344,6 +345,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 HkButton.tertiary(
                   '개인정보처리방침',
                   neutral: true,
+                  small: true,
                   onPressed: () => Navigator.of(context).push(
                     MaterialPageRoute(builder: (_) => const PrivacyScreen()),
                   ),

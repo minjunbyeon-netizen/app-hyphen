@@ -261,12 +261,10 @@ class _ActionsSection extends StatelessWidget {
                     // 내부 코드값 그대로 나왔다. 회원이 이 화면에서 그걸로 할 수
                     // 있는 일이 없다 — 이름만 남긴다 (v2.5 에 IdentityCard 에서
                     // 같은 이유로 지운 표기가 여기 한 줄 남아 있었다).
-                    Expanded(
-                      child: Text(
-                        auth.displayName ?? '',
-                        style: HyphenTokens.caption,
-                      ),
-                    ),
+                    // 2026-09-07 가시성 점검 §4 — 같은 이름이 이 화면에 두 번
+                    // 있었다 (위 카드의 h3 이름 + 여기 caption). 한 화면에서 같은
+                    // 사실을 두 번 말하지 않는다. 자리는 Spacer 가 그대로 잡는다.
+                    const Spacer(),
                     // v2.2 (H18): 계정을 끊는 동작인데 옆 계정 표시와 같은
                     // 글자 덩어리라 눌리는지 보이지 않았다. 테두리를 줘서
                     // "동작"임을 알린다 (파괴적이진 않으므로 danger 는 아니다 —

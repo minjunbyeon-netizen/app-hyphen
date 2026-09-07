@@ -55,6 +55,12 @@ class HkButton extends StatelessWidget {
   /// (링코 S17 — '서비스 탈퇴'가 일반 항목과 같은 비중이던 문제).
   final bool danger;
 
+  /// 잔글씨 — 법적 고지처럼 **읽히되 앞서면 안 되는** 링크. tertiary 에서만 의미가 있다.
+  /// 2026-09-07 가시성 점검 §4: 로그인 화면의 '이용약관 · 개인정보처리방침' 이 본문 굵기라
+  /// 정작 눌러야 할 '회원 가입 신청'(빨강)보다 무겁게 보였다. 글자만 caption 으로 내리고
+  /// 터치 48 은 그대로 둔다 (작아 보여도 누르는 자리는 안 줄인다).
+  final bool small;
+
   /// 글자색을 브랜드색 대신 중립(fgSecondary)으로. tertiary 에서만 의미가 있다.
   /// 한 화면에 브랜드색이 셋을 넘으면 강조가 죽으므로(링코 F1), primary 버튼과
   /// 같이 놓이는 부수 링크는 이쪽. 회색 muted 로 내리면 비활성처럼 보이므로
@@ -77,6 +83,7 @@ class HkButton extends StatelessWidget {
     this.icon,
     this.expand = true,
     this.neutral = false,
+    this.small = false,
     this.danger = false,
     this.busy = false,
   });
@@ -89,7 +96,8 @@ class HkButton extends StatelessWidget {
     this.expand = true,
     this.danger = false,
     this.busy = false,
-  }) : kind = HkButtonKind.primary,
+      this.small = false,
+}) : kind = HkButtonKind.primary,
        neutral = false;
 
   const HkButton.secondary(
@@ -100,7 +108,8 @@ class HkButton extends StatelessWidget {
     this.expand = true,
     this.danger = false,
     this.busy = false,
-  }) : kind = HkButtonKind.secondary,
+      this.small = false,
+}) : kind = HkButtonKind.secondary,
        neutral = false;
 
   const HkButton.tertiary(
@@ -111,7 +120,8 @@ class HkButton extends StatelessWidget {
     this.expand = false,
     this.neutral = false,
     this.busy = false,
-  }) : kind = HkButtonKind.tertiary,
+      this.small = false,
+}) : kind = HkButtonKind.tertiary,
        danger = false;
 
   @override
@@ -205,6 +215,9 @@ class HkButton extends StatelessWidget {
             tapTargetSize: shrink,
             foregroundColor: neutral
                 ? const WidgetStatePropertyAll<Color>(HyphenTokens.fgSecondary)
+                : null,
+            textStyle: small
+                ? const WidgetStatePropertyAll<TextStyle>(HyphenTokens.caption)
                 : null,
           ),
           child: child,
